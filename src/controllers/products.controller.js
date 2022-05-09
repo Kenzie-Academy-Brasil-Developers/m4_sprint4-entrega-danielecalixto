@@ -1,16 +1,70 @@
-import createProductService from "../services/createProduct.service";
+import createProductService from "../services/products/createProduct.service";
+import listProductsService from "../services/products/listProducts.service";
+import showProduct from "../services/products/showProduct.service";
 
 export default class ProductsController {
   async store(request, response) {
-    const { name, price } = request.body;
+    const { name, price, category_id } = request.body;
 
     try {
-      const product = await createProductService({ name, price });
-      return response.status(201).json(product);
+      const product = await createProductService({ name, price, category_id });
+      return response.status(201).json({ message: "Product created", product });
     } catch (err) {
-      return response.status(400).json(err.message);
+      return response.status(400).json({ message: err.message });
     }
   }
 
-  async index(request, response) {}
+  async index(request, response) {
+    try {
+      const products = await listProductsService();
+      return response.status(200).json(products);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
+  }
+
+  async show(request, response) {
+    const { id } = request.params;
+
+    try {
+      const product = await showProduct(id);
+      return response.status(201).json(product);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
+  }
+
+  async update(request, response) {
+    const { id } = request.params;
+    const { name, price, category_id } = request.body;
+
+    try {
+      const product = await updateProduct({ id, name, price, category_id });
+      return response.status(201).json({ message: "Product updated", product });
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
+  }
+
+  async delete(request, response) {
+    const { id } = request.params;
+
+    try {
+      const product = await deleteProduct(id);
+      return response.status(201).json({ message: "Product deleted", product });
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
+  }
+
+  async prodByCat(request, response) {
+    const { category_id } = request.params;
+
+    try {
+      const products = await listProductsByCategory(category_id);
+      return response.status(201).json(products);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
+  }
 }

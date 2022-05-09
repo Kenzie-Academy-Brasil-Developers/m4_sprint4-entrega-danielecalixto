@@ -1,10 +1,10 @@
 {
   "name": "entrega_testes",
   "version": "1.0.0",
-  "main": "src/app.js",
+  "main": "./src/app.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec sucrase-node ./src/app.js",
+    "dev": "nodemon ./src/app.js",
     "test": "cross-env NODE_ENV=test jest",
     "start": "node ."
   },
