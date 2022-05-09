@@ -1,6 +1,9 @@
 import createProductService from "../services/products/createProduct.service";
 import listProductsService from "../services/products/listProducts.service";
-import showProduct from "../services/products/showProduct.service";
+import showProductService from "../services/products/showProduct.service";
+import updateProductService from "../services/products/updateProduct.service";
+import deleteProductService from "../services/products/deleteProduct.service";
+import listProductsByCategoryService from "../services/products/listProductsByCategory.service";
 
 export default class ProductsController {
   async store(request, response) {
@@ -27,7 +30,7 @@ export default class ProductsController {
     const { id } = request.params;
 
     try {
-      const product = await showProduct(id);
+      const product = await showProductService(id);
       return response.status(201).json(product);
     } catch (err) {
       return response.status(400).json({ message: err.message });
@@ -39,7 +42,12 @@ export default class ProductsController {
     const { name, price, category_id } = request.body;
 
     try {
-      const product = await updateProduct({ id, name, price, category_id });
+      const product = await updateProductService({
+        id,
+        name,
+        price,
+        category_id,
+      });
       return response.status(201).json({ message: "Product updated", product });
     } catch (err) {
       return response.status(400).json({ message: err.message });
@@ -50,7 +58,7 @@ export default class ProductsController {
     const { id } = request.params;
 
     try {
-      const product = await deleteProduct(id);
+      const product = await deleteProductService(id);
       return response.status(201).json({ message: "Product deleted", product });
     } catch (err) {
       return response.status(400).json({ message: err.message });
@@ -61,7 +69,7 @@ export default class ProductsController {
     const { category_id } = request.params;
 
     try {
-      const products = await listProductsByCategory(category_id);
+      const products = await listProductsByCategoryService(category_id);
       return response.status(201).json(products);
     } catch (err) {
       return response.status(400).json({ message: err.message });

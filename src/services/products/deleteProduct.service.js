@@ -8,7 +8,10 @@ const deleteProductService = async (id) => {
     if (!res.rows.length) {
       throw new Error("Product not found");
     }
-    await database.query("DELETE FROM products WHERE id=$1", [id]);
+    const product = await database.query("DELETE FROM products WHERE id=$1", [
+      id,
+    ]);
+    return product.rows;
   } catch (err) {
     throw new Error(err);
   }
