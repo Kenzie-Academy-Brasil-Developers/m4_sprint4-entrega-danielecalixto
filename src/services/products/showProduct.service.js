@@ -8,7 +8,7 @@ const showProductService = async (id) => {
     if (!res.rows.length) {
       throw new Error("Product not found");
     }
-    return res.rows;
+    return res.rows[0];
   } catch (err) {
     throw new Error(err);
   }

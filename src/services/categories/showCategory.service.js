@@ -8,7 +8,7 @@ const showCategoryService = async (id) => {
     if (!res.rows.length) {
       throw new Error("Category not found");
     }
-    return res.rows;
+    return res.rows[0];
   } catch (err) {
     throw new Error(err);
   }

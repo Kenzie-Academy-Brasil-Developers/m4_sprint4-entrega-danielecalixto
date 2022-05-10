@@ -9,10 +9,11 @@ const deleteCategoryService = async (id) => {
       throw new Error("Category not found");
     }
     const category = await database.query(
-      "DELETE FROM categories WHERE id=$1",
+      "DELETE FROM categories WHERE id=$1 RETURNING *",
       [id]
     );
-    return category.rows;
+    const [deleted] = category.rows;
+    return deleted;
   } catch (err) {
     throw new Error(err);
   }

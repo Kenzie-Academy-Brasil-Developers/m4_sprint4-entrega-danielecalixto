@@ -16,4 +16,4 @@ COPY . .
 
 USER node
 
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]

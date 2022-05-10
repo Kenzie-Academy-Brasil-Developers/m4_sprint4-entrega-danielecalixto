@@ -9,10 +9,12 @@ const updateCategoryService = async ({ id, name }) => {
       throw new Error("Category not found");
     }
     const category = await database.query(
-      "UPDATE categories SET name = $1 WHERE id = $2",
+      "UPDATE categories SET name = $1 WHERE id = $2 RETURNING *",
       [name, id]
     );
-    return category.rows;
+    const [updated] = category.rows;
+
+    return updated;
   } catch (err) {
     throw new Error(err);
   }

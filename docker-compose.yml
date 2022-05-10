@@ -3,17 +3,23 @@ version: "3.9"
 services:
   api_express:
     container_name: m4_sprint4_entrega
-    image: node:16
+    image: m4_sprint4_entrega
     build: .
     ports:
       - 3000:3000
-    depends on:
+    depends_on:
       - db
+    environment:
+      - DB_USER=daniele
+      - DB_HOST=db
+      - DB=products_management
+      - DB_PASSWORD=9543
+      - DB_PORT=5432
   db:
     container_name: db
     image: postgres:12
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
       - POSTGRES_USER=daniele
       - POSTGRES_PASSWORD=9543

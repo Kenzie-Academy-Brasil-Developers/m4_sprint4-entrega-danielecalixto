@@ -1,13 +1,12 @@
-import createCategoryService from "../services/products/createProduct.service";
-import listCategoriesService from "../services/products/listProducts.service";
-import showCategoryService from "../services/products/showProduct.service";
-import updateCategoryService from "../services/products/updateProduct.service";
-import deleteCategoryService from "../services/products/deleteProduct.service";
+import createCategoryService from "../services/categories/createCategory.service";
+import listCategoriesService from "../services/categories/listCategories.service";
+import showCategoryService from "../services/categories/showCategory.service";
+import updateCategoryService from "../services/categories/updateCategory.service";
+import deleteCategoryService from "../services/categories/deleteCategory.service";
 
 export default class CategoriesController {
   async store(request, response) {
     const { name } = request.body;
-
     try {
       const category = await createCategoryService(name);
       return response
@@ -32,7 +31,7 @@ export default class CategoriesController {
 
     try {
       const category = await showCategoryService(id);
-      return response.status(201).json(category);
+      return response.status(200).json(category);
     } catch (err) {
       return response.status(400).json({ message: err.message });
     }
@@ -48,7 +47,7 @@ export default class CategoriesController {
         name,
       });
       return response
-        .status(201)
+        .status(200)
         .json({ message: "Category updated", category });
     } catch (err) {
       return response.status(400).json({ message: err.message });
@@ -61,7 +60,7 @@ export default class CategoriesController {
     try {
       const category = await deleteCategoryService(id);
       return response
-        .status(201)
+        .status(200)
         .json({ message: "Category deleted", category });
     } catch (err) {
       return response.status(400).json({ message: err.message });

@@ -31,7 +31,7 @@ export default class ProductsController {
 
     try {
       const product = await showProductService(id);
-      return response.status(201).json(product);
+      return response.status(200).json(product);
     } catch (err) {
       return response.status(400).json({ message: err.message });
     }
@@ -39,16 +39,16 @@ export default class ProductsController {
 
   async update(request, response) {
     const { id } = request.params;
-    const { name, price, category_id } = request.body;
+    const { name, price } = request.body;
 
     try {
       const product = await updateProductService({
         id,
         name,
         price,
-        category_id,
       });
-      return response.status(201).json({ message: "Product updated", product });
+      console.log(product);
+      return response.status(200).json({ message: "Product updated", product });
     } catch (err) {
       return response.status(400).json({ message: err.message });
     }
@@ -59,18 +59,18 @@ export default class ProductsController {
 
     try {
       const product = await deleteProductService(id);
-      return response.status(201).json({ message: "Product deleted", product });
+      return response.status(200).json({ message: "Product deleted", product });
     } catch (err) {
       return response.status(400).json({ message: err.message });
     }
   }
 
   async prodByCat(request, response) {
-    const { category_id } = request.params;
+    const { id } = request.params;
 
     try {
-      const products = await listProductsByCategoryService(category_id);
-      return response.status(201).json(products);
+      const products = await listProductsByCategoryService(id);
+      return response.status(200).json(products);
     } catch (err) {
       return response.status(400).json({ message: err.message });
     }
