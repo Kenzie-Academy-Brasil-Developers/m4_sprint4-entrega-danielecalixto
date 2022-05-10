@@ -13,7 +13,6 @@ const updateCategoryService = async ({ id, name }) => {
       [name, id]
     );
     const [updated] = category.rows;
-
     return updated;
   } catch (err) {
     throw new Error(err);

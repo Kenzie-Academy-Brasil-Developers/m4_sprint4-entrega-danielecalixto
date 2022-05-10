@@ -1,6 +1,6 @@
 import database from "../../database";
 
-const updateProductService = async ({ id, name, price }) => {
+const updateProductService = async ({ id, name }) => {
   try {
     const res = await database.query("SELECT * FROM products WHERE id = $1", [
       id,
@@ -9,8 +9,8 @@ const updateProductService = async ({ id, name, price }) => {
       throw new Error("Product not found");
     }
     const product = await database.query(
-      "UPDATE products SET name = $1, price = $2 WHERE id = $3 RETURNING *",
-      [name, price, id]
+      "UPDATE products SET name = $1 WHERE id = $2 RETURNING *",
+      [name, id]
     );
     const [updated] = product.rows;
     return updated;

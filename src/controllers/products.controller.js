@@ -39,15 +39,13 @@ export default class ProductsController {
 
   async update(request, response) {
     const { id } = request.params;
-    const { name, price } = request.body;
+    const { name } = request.body;
 
     try {
       const product = await updateProductService({
         id,
         name,
-        price,
       });
-      console.log(product);
       return response.status(200).json({ message: "Product updated", product });
     } catch (err) {
       return response.status(400).json({ message: err.message });
